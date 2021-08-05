@@ -1,0 +1,18 @@
+---
+  - name: Loop register Test 
+    hosts: localhost
+    gather_facts: no
+    
+    tasks: 
+      - name: Looping echo tasks 
+        shell: "echo this is my item: {{ item }} "
+        loop: 
+          - one
+          - two 
+        register: echo_results
+     
+      - name: displaying echo_results 
+        debug: 
+          msg: "STDOUT from previous task: {{ item.stdout }}"
+        loop: "{{ echo_results['results'] }}"
+       
